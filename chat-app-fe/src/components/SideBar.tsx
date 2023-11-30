@@ -7,11 +7,12 @@ import { setMessage } from '../redux/slices/messageSlice';
 import { RootState } from '../redux/store';
 import { getAllUser } from '../services/web';
 import { getMessage } from '../services/message';
+import { SearchIcon } from './Icons';
 
 export const chatSocket = io('http://localhost:8080/chat', {});
 const SideBar: React.FC = () => {
     const dispatch = useDispatch();
-    const currentRoomId = useSelector((state: RootState) => state.message.currentRoom);
+    const { currentRoom, currentUser } = useSelector((state: RootState) => state.message);
     const userData = useSelector((state: RootState) => state.user.data);
     const [usersData, setUserData] = useState<any[]>();
 
@@ -34,7 +35,7 @@ const SideBar: React.FC = () => {
 
     const handleClick = (userId: string) => {
         let newRoomId: string | number;
-        // leaveGroup(currentRoomId);
+        leaveGroup(currentRoom);
         joinGroup(userId);
         chatSocket.once('joined-group', (roomId) => {
             newRoomId = roomId;
@@ -62,7 +63,7 @@ const SideBar: React.FC = () => {
         userData && (
             <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
                 <div className=" h-auto w-full">
-                    <div className="flex flex-row items-center py-2">
+                    <div className="flex flex-row items-center py-2 cursor-pointer">
                         <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
                             <svg
                                 className="w-6 h-6"
@@ -81,22 +82,22 @@ const SideBar: React.FC = () => {
                         </div>
                         <div className="ml-2 font-bold text-2xl">QuickChat</div>
                     </div>
-                    <div className=" flex flex-col">
-                        <div className="flex items-center">
-                            <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                                {userData.last_name[0]}
-                            </div>
-                            <span className="font-semibold px-2">{userData.full_name}</span>
+                    <div className="w-full bg-slate-200 px-3 py-1.5 rounded-[4px]">
+                        <div className="flex">
+                            <i>
+                                <SearchIcon className={'text-[#758390]'} />
+                            </i>
+                            <input
+                                className=" bg-transparent outline-none pl-2 text-[14px] w-full"
+                                type="text"
+                                placeholder="Tìm kiếm bạn bè"
+                            />
                         </div>
-                        <button type="button" className=" cursor-pointer" onClick={handleLogout}>
-                            Đăng xuất
-                        </button>
                     </div>
                 </div>
                 <div className="flex flex-col mt-8">
                     <div className="flex flex-row items-center justify-between text-xs">
-                        <span className="font-bold">Active Conversations</span>
-                        <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">4</span>
+                        <span className="font-bold text-[16px]">Gần đây</span>
                     </div>
                     <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
                         {usersData &&
@@ -104,7 +105,9 @@ const SideBar: React.FC = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className="flex cursor-pointer flex-row items-center hover:bg-gray-100 rounded-xl p-2"
+                                        className={`flex cursor-pointer flex-row items-center  rounded-xl p-2 ${
+                                            currentUser === el.id ? 'bg-gray-200' : 'hover:bg-gray-100'
+                                        }`}
                                         onClick={() => {
                                             handleClick(el.id);
                                         }}

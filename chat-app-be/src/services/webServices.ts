@@ -8,10 +8,11 @@ export const getAllUsers = async (userId:string|undefined) => {
         if(!usersData){
             return {
                 status : false,
-                message : "User not found",
-                statusCode : 404
+                message : "Đã xảy ra lỗi vui lòng thử lại !",
+                statusCode : 500
             }
         }
+      
         return {
             status : true,
             data : {
