@@ -12,6 +12,7 @@ const Navication: React.FC = () => {
         window.location.href = '/';
     };
     const currentPath = window.location.pathname;
+
     return (
         <div className="w-[70px] bg-[#181f2e] flex flex-col justify-between">
             <div>

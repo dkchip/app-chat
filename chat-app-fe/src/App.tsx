@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
+import ProtectedAuth from './utils/protectedRoute/ProtectedAuth';
+import ProtectedAnonymous from './utils/protectedRoute/ProtectedAnonymous';
 import ChatPage from './pages/chat/ChatPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -51,16 +53,53 @@ function App() {
                         <Route
                             path="/chat"
                             element={
-                                <MainLayout>
-                                    <ChatPage />
-                                </MainLayout>
+                                <ProtectedAuth>
+                                    <MainLayout>
+                                        <ChatPage />
+                                    </MainLayout>
+                                </ProtectedAuth>
                             }
                         />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                        <Route path="/verification-code" element={<VerificationCodePage />} />
+                        <Route
+                            path="/login"
+                            element={
+                                <ProtectedAnonymous>
+                                    <LoginPage />
+                                </ProtectedAnonymous>
+                            }
+                        />
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedAnonymous>
+                                    <LoginPage />
+                                </ProtectedAnonymous>
+                            }
+                        />
+                        <Route
+                            path="/register"
+                            element={
+                                <ProtectedAnonymous>
+                                    <RegisterPage />
+                                </ProtectedAnonymous>
+                            }
+                        />
+                        <Route
+                            path="/forgot-password"
+                            element={
+                                <ProtectedAnonymous>
+                                    <ForgotPasswordPage />
+                                </ProtectedAnonymous>
+                            }
+                        />
+                        <Route
+                            path="/verification-code"
+                            element={
+                                <ProtectedAnonymous>
+                                    <VerificationCodePage />
+                                </ProtectedAnonymous>
+                            }
+                        />
                     </Routes>
                 </div>
             </Router>

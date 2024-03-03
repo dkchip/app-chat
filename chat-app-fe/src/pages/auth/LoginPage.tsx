@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import { authLogin } from '../../services/auth';
 import { setUser } from '../../redux/slices/userSlice';
-import { RootState } from '../../redux/store';
 import { LoadingIcon } from '../../components/Icons';
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
-    const isLogind = useSelector((state: RootState) => state.user.isLogind);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const {
         register,
@@ -36,12 +35,6 @@ const LoginPage: React.FC = () => {
             });
         setIsLoading(false);
     };
-
-    useEffect(() => {
-        if (isLogind) {
-            window.location.href = '/chat';
-        }
-    }, [isLogind]);
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
