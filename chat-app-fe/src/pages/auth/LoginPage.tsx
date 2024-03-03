@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-import { userLogin } from '../services/auth';
-import { setUser } from '../redux/slices/userSlice';
-import { RootState } from '../redux/store';
+import { authLogin } from '../../services/auth';
+import { setUser } from '../../redux/slices/userSlice';
+import { RootState } from '../../redux/store';
+import { LoadingIcon } from '../../components/Icons';
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
     const isLogind = useSelector((state: RootState) => state.user.isLogind);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        // formState: { errors },
     } = useForm();
 
-    const handleLogin = (data: any) => {
-        userLogin(data)
+    const handleLogin = async (data: any) => {
+        setIsLoading(true);
+        await authLogin(data)
             .then((res) => {
                 const user = {
                     isLogind: true,
@@ -31,6 +34,7 @@ const LoginPage: React.FC = () => {
             .catch((err) => {
                 console.log(err);
             });
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -38,6 +42,7 @@ const LoginPage: React.FC = () => {
             window.location.href = '/chat';
         }
     }, [isLogind]);
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -90,19 +95,29 @@ const LoginPage: React.FC = () => {
                                         <label className="text-gray-500 dark:text-gray-300">Remember me</label>
                                     </div>
                                 </div>
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/forgot-password"
                                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                                 >
                                     Forgot password?
-                                </a>
+                                </Link>
                             </div>
-                            <button
-                                type="submit"
-                                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            >
-                                Sign in
-                            </button>
+                            <div>
+                                {isLoading ? (
+                                    <button className="  w-full text-white bg-primary-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                        <i className="spinner  inline-block ">
+                                            <LoadingIcon className="" />
+                                        </i>
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                        className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    >
+                                        Sign in
+                                    </button>
+                                )}
+                            </div>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet?{' '}
                                 <Link

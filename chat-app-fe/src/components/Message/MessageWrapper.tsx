@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Message from './Message';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 
 interface Message {
     id: string;

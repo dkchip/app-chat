@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
-import HomePage from './pages/homePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import ChatPage from './pages/chat/ChatPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
 import MainLayout from './layouts/MainLayout';
-import { userProfile } from './services/auth';
+import { authProfile } from './services/auth';
 import { setUser } from './redux/slices/userSlice';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import VerificationCodePage from './pages/auth/VerificationCodePage';
 
 function App() {
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function App() {
         const token = Cookies.get('token');
 
         if (token) {
-            userProfile()
+            authProfile()
                 .then((res) => {
                     dispatch(
                         setUser({
@@ -50,26 +52,15 @@ function App() {
                             path="/chat"
                             element={
                                 <MainLayout>
-                                    <HomePage />
+                                    <ChatPage />
                                 </MainLayout>
                             }
                         />
-                        <Route
-                            path="/login"
-                            element={
-                                <MainLayout>
-                                    <LoginPage />
-                                </MainLayout>
-                            }
-                        />
-                        <Route
-                            path="/register"
-                            element={
-                                <MainLayout>
-                                    <RegisterPage />
-                                </MainLayout>
-                            }
-                        />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                        <Route path="/verification-code" element={<VerificationCodePage />} />
                     </Routes>
                 </div>
             </Router>

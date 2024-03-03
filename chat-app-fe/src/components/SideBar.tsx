@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
 import { io } from 'socket.io-client';
 
 import { setMessage } from '../redux/slices/messageSlice';
@@ -55,10 +54,6 @@ const SideBar: React.FC = () => {
             });
     };
 
-    const handleLogout = () => {
-        Cookies.remove('token');
-        window.location.href = '/login';
-    };
     return (
         userData && (
             <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">

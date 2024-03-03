@@ -1,13 +1,12 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Socket, io } from 'socket.io-client';
 
-import SideBar from '../components/SideBar';
-import { chatSocket } from '../components/SideBar';
-import { RootState } from '../redux/store';
-import { updateMessage } from '../redux/slices/messageSlice';
-import MessageWrapper from '../components/MessageWrapper';
-import { sendMessage as sendMessageAPI } from '../services/message';
+import SideBar from '../../components/SideBar';
+import { chatSocket } from '../../components/SideBar';
+import { RootState } from '../../redux/store';
+import { updateMessage } from '../../redux/slices/messageSlice';
+import MessageWrapper from '../../components/Message/MessageWrapper';
+import { sendMessage as sendMessageAPI } from '../../services/message';
 
 const HomePage: React.FC = () => {
     const dispatch = useDispatch();
