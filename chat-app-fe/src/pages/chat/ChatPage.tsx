@@ -53,12 +53,13 @@ const HomePage: React.FC = () => {
                 {/* sidebar */}
                 <SideBar />
                 {/* Content  */}
-                <div className="flex flex-col flex-auto h-full p-6">
-                    <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
-                        <div className="flex flex-col h-full overflow-x-auto mb-4">
+                <div className=" dark:bg-darkBackground-200 flex flex-col flex-auto h-full py-6 px-2">
+                    <div className="dark:bg-darkBackground-300 flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full ">
+                        <div className="h-full overflow-x-auto mb-4 px-2">
                             <MessageWrapper data={messageState.messageData} />
                         </div>
-                        <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+                        {/*  */}
+                        <div className="dark:!bg-darkBackground-200 flex flex-row items-center h-16  bg-white w-full px-4">
                             <div>
                                 <button className="flex items-center justify-center text-gray-400 hover:text-gray-600">
                                     <svg
@@ -81,7 +82,7 @@ const HomePage: React.FC = () => {
                                 <div className="relative w-full">
                                     <input
                                         type="text"
-                                        className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                                        className="dark:!bg-darkBackground-100 dark:!border-darkBackground-200 dark:text-white  flex w-full border  rounded-xl focus:outline-none  pl-4 h-10"
                                         value={messages}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {

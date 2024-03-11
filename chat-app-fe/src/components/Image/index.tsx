@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import noImage from '../../assets/Images/no-image.jpg';
 
 interface ImageProps {
     src: string;
@@ -12,10 +13,12 @@ const Image: React.FC<ImageProps> = ({ src, alt, className }) => {
         if (src) {
             setFallBack(null);
         } else {
-            setFallBack('/no-image.jpg');
+            setFallBack(noImage);
         }
     }, [src]);
-    const handleImageError = (): void => {};
+    const handleImageError = (): void => {
+        setFallBack(noImage);
+    };
     return <img className={className} src={_fallBack || src} alt={alt} onError={handleImageError} />;
 };
 

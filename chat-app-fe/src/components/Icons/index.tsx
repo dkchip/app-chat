@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faSpinner, faPhone, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faBell, faUser, faMessage } from '@fortawesome/free-regular-svg-icons';
+import { faBell, faUser, faMessage, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 
 export const SearchIcon = ({ className }: { className: string | undefined }) => {
     return <FontAwesomeIcon icon={faMagnifyingGlass} className={className} />;
@@ -28,4 +28,12 @@ export const BellIcon = ({ className }: { className: string | undefined }) => {
 
 export const LogOutIcon = ({ className }: { className: string | undefined }) => {
     return <FontAwesomeIcon icon={faArrowRightFromBracket} className={className} />;
+};
+
+export const MoonIcon = ({ className }: { className: string | undefined }) => {
+    return <FontAwesomeIcon icon={faMoon} className={className} />;
+};
+
+export const SunIcon = ({ className }: { className: string | undefined }) => {
+    return <FontAwesomeIcon icon={faSun} className={className} />;
 };

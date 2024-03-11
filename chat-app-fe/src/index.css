@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(112, 112, 112, 0.06);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(7, 7, 7, 0);
+}
 .flex-center {
     display: flex;
     justify-content: center;
@@ -33,4 +47,8 @@
 
 .spinner {
     animation: logo-spin infinite 1s linear;
+}
+
+.tyn-media-multiple > *:not(:first-child) {
+    margin-left: -14px;
 }

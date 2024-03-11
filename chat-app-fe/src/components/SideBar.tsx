@@ -56,12 +56,12 @@ const SideBar: React.FC = () => {
 
     return (
         userData && (
-            <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
+            <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 dark:!bg-darkBackground-200">
                 <div className=" h-auto w-full">
                     <div className="flex flex-row items-center py-2 cursor-pointer">
-                        <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
+                        <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 dark:bg-darkBackground-100 h-10 w-10">
                             <svg
-                                className="w-6 h-6"
+                                className="w-6 h-6 "
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -75,15 +75,15 @@ const SideBar: React.FC = () => {
                                 ></path>
                             </svg>
                         </div>
-                        <div className="ml-2 font-bold text-2xl">QuickChat</div>
+                        <div className="ml-2 font-bold text-2xl dark:text-white">QuickChat</div>
                     </div>
-                    <div className="w-full bg-slate-200 px-3 py-1.5 rounded-[4px]">
+                    <div className="w-full bg-slate-200 px-3 py-1.5 rounded-[4px] dark:bg-darkBackground-100">
                         <div className="flex">
                             <i>
                                 <SearchIcon className={'text-[#758390]'} />
                             </i>
                             <input
-                                className=" bg-transparent outline-none pl-2 text-[14px] w-full"
+                                className=" bg-transparent outline-none pl-2 text-[14px] w-full dark:text-white"
                                 type="text"
                                 placeholder="Tìm kiếm bạn bè"
                             />
@@ -92,7 +92,7 @@ const SideBar: React.FC = () => {
                 </div>
                 <div className="flex flex-col mt-8">
                     <div className="flex flex-row items-center justify-between text-xs">
-                        <span className="font-bold text-[16px]">Gần đây</span>
+                        <span className="font-bold text-[16px] dark:text-white">Gần đây</span>
                     </div>
                     <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
                         {usersData &&
@@ -100,8 +100,10 @@ const SideBar: React.FC = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className={`flex cursor-pointer flex-row items-center  rounded-xl p-2 ${
-                                            currentUser === el.id ? 'bg-gray-200' : 'hover:bg-gray-100'
+                                        className={`flex cursor-pointer flex-row items-center  rounded-xl p-2 dark:text-white ${
+                                            currentUser === el.id
+                                                ? 'bg-gray-200 dark:!bg-darkBackground-300'
+                                                : 'hover:bg-gray-100 hover:dark:bg-darkBackground-300'
                                         }`}
                                         onClick={() => {
                                             handleClick(el.id);

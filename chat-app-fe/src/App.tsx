@@ -13,6 +13,7 @@ import { authProfile } from './services/auth';
 import { setUser } from './redux/slices/userSlice';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import VerificationCodePage from './pages/auth/VerificationCodePage';
+import ProfilePage from './pages/profile/ProfilePage';
 
 function App() {
     const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function App() {
     return (
         !loading && (
             <Router>
-                <div className="app">
+                <div className="app ">
                     <Routes>
                         <Route
                             path="/chat"
@@ -98,6 +99,16 @@ function App() {
                                 <ProtectedAnonymous>
                                     <VerificationCodePage />
                                 </ProtectedAnonymous>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <ProtectedAuth>
+                                    <MainLayout>
+                                        <ProfilePage />
+                                    </MainLayout>
+                                </ProtectedAuth>
                             }
                         />
                     </Routes>
