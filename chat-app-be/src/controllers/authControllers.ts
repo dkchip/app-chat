@@ -59,6 +59,24 @@ export const authProfile = async (req: any, res: Response) => {
     }
 };
 
+export const updateProfile = async (req: any, res: Response) => {
+    try {
+        // image avatar and background user
+        const images = req.files;
+
+        const { userId } = req.user;
+        const profileData = req.body;
+        const data = await authServices.updateProfile(userId, profileData, req.images);
+        return res.status(200).json();
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({
+            message: error.message,
+            statusCode: 500,
+        });
+    }
+};
+
 export const sendCodeByEmail = async (req: Request, res: Response) => {
     try {
         const { email } = req.body;

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 import router from './routes';
 import connectDB from './configs/connectDB';
+import configStaticFile from './configs/configStaticFile';
 
 const app = express();
 const server = http.createServer(app);
@@ -33,6 +34,7 @@ connectDB();
 
 // set routers
 app.use('/', router);
+configStaticFile(app);
 
 io.of('/chat').on('connection', async (socket) => {
     // console.log("a user connect to chat room")

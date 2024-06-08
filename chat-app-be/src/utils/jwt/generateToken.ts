@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 interface PayloadProps {
-    uuid : string;
-    userId : string;
+    uuid: string;
+    userId: string;
 }
 
-const generateToken = (payload:PayloadProps) => {
-    return jwt.sign(payload,process.env.ACCESS_TOKEN_KEY!,{expiresIn:"30d"})
-}
+const generateToken = (payload: PayloadProps) => {
+    return jwt.sign(payload, process.env.ACCESS_TOKEN_KEY!, { expiresIn: '10m' });
+};
 
-export default generateToken
+export default generateToken;

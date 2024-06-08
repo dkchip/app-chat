@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEventHandler } from 'react';
 import noImage from '../../assets/Images/no-image.jpg';
 
 interface ImageProps {
     src: string;
     alt: string;
     className: string;
+    onClick?: MouseEventHandler<HTMLImageElement>;
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt, className }) => {
+const Image: React.FC<ImageProps> = ({ src, alt, className, onClick }) => {
     const [_fallBack, setFallBack] = useState<string | null>(null);
     useEffect(() => {
         if (src) {
@@ -19,7 +20,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, className }) => {
     const handleImageError = (): void => {
         setFallBack(noImage);
     };
-    return <img className={className} src={_fallBack || src} alt={alt} onError={handleImageError} />;
+    return <img className={className} src={_fallBack || src} alt={alt} onError={handleImageError} onClick={onClick} />;
 };
 
 export default Image;

@@ -8,17 +8,11 @@ import sendEmail from '../utils/email/sendEmail';
 import hideEmail from '../utils/email/hideEmail';
 import hashPassword from '../utils/password/hashPassword';
 import comparePassword from '../utils/password/comparePassword';
+import generateRefreshToken from '../utils/jwt/generateRefreshToken';
+import { UploadedFile, User as UserType } from '../types';
+import handleUploadImage from '../utils/cloudinary/uploadImage';
 
-interface User {
-    id: string;
-    email: string;
-    password: string;
-    first_name: string;
-    last_name: string;
-    image: string;
-}
-
-export const authRegister = async (data: User) => {
+export const authRegister = async (data: UserType) => {
     try {
         const checkEmail = await User.findOne({
             email: data.email,
@@ -33,7 +27,7 @@ export const authRegister = async (data: User) => {
         }
 
         const encryptionPassword = hashPassword(data.password);
-
+        const username = data.email.split('@')[0];
         const userData = new User({
             id: uuidV4(),
             email: data.email,
@@ -41,7 +35,10 @@ export const authRegister = async (data: User) => {
             first_name: data.first_name,
             last_name: data.last_name,
             full_name: data.first_name + ' ' + data.last_name,
-            image: data.image ? data.image : null,
+            username: username,
+            image: data.avatar ? data.avatar : null,
+            background_image: null,
+            last_username_change: null,
             created_at: new Date(),
             updated_at: new Date(),
         });
@@ -68,9 +65,9 @@ export const authRegister = async (data: User) => {
     }
 };
 
-export const authLogin = async (data: User) => {
+export const authLogin = async (data: UserType) => {
     try {
-        const userData: User | null = await User.findOne({
+        const userData: UserType | null = await User.findOne({
             email: data.email,
         });
 
@@ -96,12 +93,13 @@ export const authLogin = async (data: User) => {
             userId: userData.id,
         };
         const accessToken = generateToken(payload);
-
+        const refreshToken = generateRefreshToken(payload);
         return {
             status: true,
             data: {
                 data: userData,
-                accessToken: accessToken,
+                accessToken,
+                refreshToken,
             },
         };
     } catch (error) {
@@ -130,6 +128,46 @@ export const authProfile = async (userId: string | number) => {
             status: true,
             data: userData,
         };
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+interface ImageFiles {
+    avatar : UploadedFile[],
+    background_image : UploadedFile[]
+}
+
+export const updateProfile = async (userId: string, profileData: UserType, imageFiles: ImageFiles | null = null) => {
+    try {
+        const oldProfile = await User.findOne({
+            id: userId,
+        });
+        if (!oldProfile)
+            return {
+                status: false,
+                message: 'User not found',
+                statusCode: 404,
+            };
+
+        if (imageFiles) {
+            const cldRes = await handleUploadImage(imageFiles.avatar[0]);
+            if (profileData.username == oldProfile.username) {
+                const { acknowledged } = await User.updateOne(
+                    {
+                        id: userId,
+                    },
+                    {
+                        first_name: profileData.first_name,
+                        last_name: profileData.last_name,
+                        full_name: profileData.first_name + ' ' + profileData.last_name,
+                    },
+                );
+            }
+            return {
+                status: true,
+            };
+        }
     } catch (error) {
         return Promise.reject(error);
     }

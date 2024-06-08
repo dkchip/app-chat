@@ -1,5 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faSpinner, faPhone, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import {
+    faMagnifyingGlass,
+    faSpinner,
+    faPhone,
+    faArrowRightFromBracket,
+    faXmark,
+    faCameraRetro,
+} from '@fortawesome/free-solid-svg-icons';
 import { faBell, faUser, faMessage, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 
 export const SearchIcon = ({ className }: { className: string | undefined }) => {
@@ -37,3 +44,12 @@ export const MoonIcon = ({ className }: { className: string | undefined }) => {
 export const SunIcon = ({ className }: { className: string | undefined }) => {
     return <FontAwesomeIcon icon={faSun} className={className} />;
 };
+
+export const CloseIcon = ({ className }: { className: string | undefined }) => {
+    return <FontAwesomeIcon icon={faXmark} className={className} />;
+};
+
+export const CameraIcon = ({ className }: { className: string | undefined }) => {
+    return <FontAwesomeIcon icon={faCameraRetro} className={className} />;
+};
+
