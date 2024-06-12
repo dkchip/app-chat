@@ -30,6 +30,7 @@ const HomePage: React.FC = () => {
             );
         });
     }, [chatSocket]);
+
     const sendMessage = async () => {
         if (!(messages.length > 0)) return;
         const messageData = await sendMessageAPI(messageState.currentUser, messages);

@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { Link } from 'react-router-dom';
 import { authRegister } from '../../services/auth';
 
 const RegisterPage: React.FC = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -13,8 +15,8 @@ const RegisterPage: React.FC = () => {
 
     const handleRegister = (data: any) => {
         authRegister(data)
-            .then((res) => {
-                console.log(res);
+            .then(() => {
+                navigate('/login');
             })
             .catch((err) => {
                 console.log(err);
